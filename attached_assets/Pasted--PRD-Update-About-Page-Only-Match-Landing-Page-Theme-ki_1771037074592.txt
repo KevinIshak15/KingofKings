@@ -1,0 +1,282 @@
+## PRD: Update About Page Only (Match Landing Page Theme) — kingofkingsgroup.com
+
+### 1) Overview
+
+**Objective:** Update the **About page** of **kingofkingsgroup.com** with new copy and a polished layout that **matches the existing landing page theme** (same typography scale, spacing rhythm, section width, button styling, and visual patterns).
+
+**Hard constraint:** **Only modify the About page**. Do not change any other pages, routes, components, global styles, config, or backend logic.
+
+---
+
+### 2) Goals
+
+* Publish a premium, credible About page for:
+
+  1. **King of Kings Group (company overview)**
+  2. **Ragy Moussa (partner/founder bio)**
+* Ensure the About page looks like it was designed as part of the **current landing page theme**.
+
+---
+
+### 3) Non-Goals (Out of Scope)
+
+* Editing Home/Landing page, Services, Contact, Footer, Nav, Blog, or any other route
+* Creating new routes or redesigning branding
+* Changing global CSS/theme tokens, Tailwind config, layout wrappers, shared component styles
+* Adding new dependencies/packages
+* Building a CMS or adding backend functionality
+
+---
+
+### 4) Success Criteria
+
+* The About page contains the exact sections and copy in this PRD.
+* The About page visually matches the landing page:
+
+  * same **max-width/container**
+  * same **vertical section padding**
+  * same **heading/subheading styles**
+  * same **button component/class styling**
+  * same **card/background patterns** if used on landing
+* No regressions elsewhere:
+
+  * no visible changes to any other pages
+  * no new console errors
+  * no broken links
+* Mobile responsive:
+
+  * no horizontal scroll
+  * readable line lengths and spacing
+
+---
+
+### 5) Scope (In-Scope)
+
+* Update About page content and layout **within the About page file only**
+* Use existing theme primitives/patterns:
+
+  * existing `Container`, `Section`, `Button`, `Card`, etc. if already used on landing page
+  * existing utility classes used by landing page sections
+* Optional About-only styling **only if already supported** (e.g., existing About CSS module already imported by About page)
+
+---
+
+### 6) Theme-Matching Requirements (Critical)
+
+**The About page must follow the landing page theme without modifying global files.**
+
+#### 6.1 Layout primitives
+
+* Reuse the same container/section patterns used on the landing page:
+
+  * same max width (e.g., `max-w-*`, `container`, `mx-auto`)
+  * same padding approach (e.g., `px-*`, `py-*`)
+* If the landing page uses a `Section` or `Container` component/class pattern, apply the same pattern in About.
+
+#### 6.2 Typography
+
+* Hero title must match landing hero heading style (size/weight/tracking).
+* Hero subheading must match landing subtitle style.
+* Section headings (H2/H3) must match landing section heading styles.
+* Paragraph text must match landing base text size/leading/color.
+
+#### 6.3 Spacing rhythm
+
+* Match landing page section spacing:
+
+  * use the same vertical padding values used between sections on landing (example patterns: `py-16`, `py-20`, `space-y-6`, etc.)
+* Keep consistent gaps between heading → body → bullets across sections.
+
+#### 6.4 Buttons and CTAs
+
+* Use the exact same **button component or classes** as landing page primary CTA.
+* CTA must link to an **existing route** (likely `/contact`). Do not create a new route.
+
+#### 6.5 Cards / Background patterns
+
+* If landing page uses cards (rounded corners, borders, shadows), reuse that same card style for:
+
+  * “Our Approach” block
+  * “Meet Ragy Moussa” block
+* If landing page alternates background colors (light gray sections, gradients), About page should follow the same pattern **using existing classes only**.
+
+#### 6.6 Global theme safety
+
+* Do **not** edit:
+
+  * global CSS
+  * theme providers
+  * Tailwind config
+  * shared components’ internals
+  * layout wrapper
+  * header/footer
+
+---
+
+### 7) Information Architecture (About Page Structure)
+
+Implement sections in this order:
+
+1. **Hero**
+
+   * Title: “About King of Kings Group”
+   * Subtitle: short value proposition aligned with property management + GTA
+
+2. **Company Overview**
+
+   * “Our Story” section
+   * One to two paragraphs
+
+3. **Our Approach**
+
+   * Bulleted list (4–6)
+   * Optional short closing line
+
+4. **Leadership / Partner Spotlight**
+
+   * “Meet Ragy Moussa”
+   * Title line + 2–3 paragraphs bio
+
+5. **CTA Banner (Optional but recommended)**
+
+   * One sentence + primary button linking to existing contact route
+
+---
+
+### 8) Final Copy (Must Use)
+
+#### 8.1 Hero
+
+**H1:** About King of Kings Group
+**Subheadline:**
+A hands-on property management team in the Greater Toronto Area—built to protect your asset, strengthen performance, and simplify ownership.
+
+---
+
+#### 8.2 Company About
+
+**H2:** Our Story
+**Body:**
+King of Kings Group is a Greater Toronto Area property management company built to protect the value of real estate and simplify ownership. We manage homes with an investor mindset—prioritizing strong tenants, proactive maintenance, clear communication, and disciplined financial oversight.
+
+Whether you own a single property or a growing portfolio, our focus is the same: reduce friction, improve performance, and help you make confident decisions with reliable reporting and a hands-on management approach.
+
+---
+
+#### 8.3 Our Approach
+
+**H2:** Our Approach
+**Bullets (4–6):**
+
+* Tenant-first leasing standards and thorough screening
+* Proactive property care and responsive maintenance coordination
+* Clear, consistent communication with owners and tenants
+* Organized documentation, reporting, and operational transparency
+* Portfolio-minded guidance to support long-term asset growth
+
+**Optional closing line (one sentence):**
+We treat every home like a long-term asset—because that’s what it is.
+
+---
+
+#### 8.4 Partner / Founder Bio
+
+**H2:** Meet Ragy Moussa
+**Title line (smaller text under heading):** Partner | CEO & Founder, Moussa Homes • Award-Winning Real Estate Broker
+
+**Body:**
+Ragy Moussa is a seasoned real estate broker and developer with over a decade of experience in the Greater Toronto Area. He is the CEO and Founder of Moussa Homes and an award-winning broker with Keller Williams Real Estate Associates, recognized for outstanding performance every year since 2015.
+
+With a proven track record in residential sales, investment strategy, and new construction development, Ragy has guided countless clients and partners through high-return real estate ventures. His expertise spans market analysis, deal structuring, and exit planning—making him a strategic asset in maximizing investor value.
+
+As a partner in this project, Ragy brings deep market insight, strong sales leadership, and hands-on experience in delivering profitable developments. His reputation, network, and results-driven approach help ensure success from acquisition to execution to sale.
+
+---
+
+#### 8.5 CTA (Optional but recommended)
+
+**Heading:** Ready for hands-on management?
+**Line:** Let’s talk about your property and how we can support your goals.
+**Button:** Contact Us (links to existing `/contact` route)
+
+---
+
+### 9) Engineering Requirements
+
+#### 9.1 Locate About page file
+
+Common locations:
+
+* **Next.js (pages router):** `pages/about.tsx` / `pages/about.jsx`
+* **Next.js (app router):** `app/about/page.tsx`
+* **React Router/Vite:** `src/pages/About.tsx` or `src/routes/about.tsx`
+* **Static HTML:** `about.html`
+
+#### 9.2 Allowed changes
+
+* Edit only the About page file.
+* If About page already imports a page-specific CSS module (e.g., `About.module.css`), edits to that file are allowed **only if it’s strictly About-specific and already used by the About page**.
+
+#### 9.3 Disallowed changes
+
+* Any other files, especially:
+
+  * `layout`, `app`, `_app`, `_document`, global css
+  * shared component internals
+  * theme tokens/config
+  * routing config
+  * header/footer components
+
+#### 9.4 Implementation approach
+
+* Match landing page patterns by **copying structure/classes** already used on the landing page (hero section structure, section wrappers, CTA button).
+* Reuse existing components by importing them (do not edit their source).
+* If the landing page uses Tailwind/utility classes, replicate those patterns in About.
+
+---
+
+### 10) Acceptance Tests
+
+1. Navigate to `/about`:
+
+   * Hero title and subtitle appear correctly.
+   * “Our Story,” “Our Approach,” “Meet Ragy Moussa” sections appear in the correct order.
+   * CTA button (if included) routes correctly to an existing contact page.
+
+2. Visual/theme consistency:
+
+   * About page typography and spacing match landing page.
+   * Buttons and cards match landing page styling.
+
+3. Regression check:
+
+   * Home page unchanged
+   * Navigation unchanged
+   * Footer unchanged
+   * No console errors
+
+4. Mobile:
+
+   * No horizontal scroll
+   * Sections stack cleanly
+   * Bullets remain readable
+
+---
+
+### 11) QA Checklist
+
+* [ ] Only About page file (and existing About-only CSS module if applicable) changed
+* [ ] Copy matches PRD exactly (no missing claims or altered dates)
+* [ ] Theme consistency verified against landing page
+* [ ] Links use existing routes
+* [ ] No new dependencies
+* [ ] No console/lint errors introduced
+
+---
+
+### 12) Replit Agent Instruction (Copy/Paste)
+
+**Instruction to agent:**
+“Update ONLY the About page for kingofkingsgroup.com. Implement the PRD copy and section structure exactly. Match the existing landing page theme by reusing the same section/container/typography/button patterns already used on the landing page. Do not modify any other files, global styles, layout, header/footer, shared component internals, routes, or dependencies.”
+
+---
