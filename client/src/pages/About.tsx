@@ -34,6 +34,33 @@ export default function About() {
         </div>
       </section>
 
+      {/* Mission & Vision */}
+      <section className="section-padding bg-secondary text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary via-secondary to-secondary"></div>
+        <div className="container-wide relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+            <div className="space-y-6">
+              <div className="inline-block border-b border-primary pb-2 mb-4">
+                <h2 className="text-primary font-bold tracking-widest uppercase text-sm">Our Mission</h2>
+              </div>
+              <h3 className="font-serif text-3xl md:text-4xl mb-6">Empowering Confidence</h3>
+              <p className="text-gray-300 leading-relaxed text-lg">
+                King of Kings Group is committed to elevating the real estate experience through expert guidance, disciplined investment strategy, and professional property management. We aim to protect and grow our clients’ assets while delivering service that reflects excellence, transparency, and trust.
+              </p>
+            </div>
+            <div className="space-y-6">
+              <div className="inline-block border-b border-primary pb-2 mb-4">
+                <h2 className="text-primary font-bold tracking-widest uppercase text-sm">Our Vision</h2>
+              </div>
+              <h3 className="font-serif text-3xl md:text-4xl mb-6">A Legacy of Impact</h3>
+              <p className="text-gray-300 leading-relaxed text-lg">
+                We envision King of Kings Group as a premier real estate authority, shaping communities through smart development, strategic investment, and high-performance property management. Our goal is to build a legacy brand that stands for strength, stability, and generational wealth creation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Approach */}
       <section className="section-padding bg-muted">
         <div className="container-wide">
