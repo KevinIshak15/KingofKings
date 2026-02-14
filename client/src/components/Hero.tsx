@@ -32,12 +32,23 @@ export function Hero({
       <div className={`absolute inset-0 ${overlayOpacity}`} />
       
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-6">
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center"
         >
+          {large && (
+            <motion.img
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 1 }}
+              src="/static/logo.png"
+              alt="King of Kings Logo"
+              className="h-32 md:h-48 w-auto mb-8 drop-shadow-[0_0_15px_rgba(200,166,70,0.5)]"
+            />
+          )}
           <h2 className="text-primary font-bold tracking-[0.2em] uppercase text-sm md:text-base mb-4">
             {subtitle}
           </h2>

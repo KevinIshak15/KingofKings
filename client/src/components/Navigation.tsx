@@ -34,19 +34,26 @@ export function Navigation() {
     >
       <div className="container-wide flex items-center justify-between">
         <Link href="/" className="z-50">
-          <div className="flex flex-col items-center cursor-pointer">
-            <span className={cn(
-              "font-serif text-2xl font-bold tracking-widest uppercase transition-colors",
-              scrolled ? "text-secondary" : "text-white"
-            )}>
-              King Of Kings
-            </span>
-            <span className={cn(
-              "text-[0.6rem] tracking-[0.3em] uppercase transition-colors",
-              scrolled ? "text-primary" : "text-primary"
-            )}>
-              Real Estate Services
-            </span>
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <img 
+              src="/static/logo.png" 
+              alt="King Of Kings Logo" 
+              className="h-12 w-auto transition-transform duration-300 group-hover:scale-110" 
+            />
+            <div className="flex flex-col">
+              <span className={cn(
+                "font-serif text-xl font-bold tracking-widest uppercase transition-colors leading-none",
+                scrolled ? "text-secondary" : "text-white"
+              )}>
+                King Of Kings
+              </span>
+              <span className={cn(
+                "text-[0.55rem] tracking-[0.3em] uppercase transition-colors mt-1",
+                scrolled ? "text-primary" : "text-primary"
+              )}>
+                Real Estate Services
+              </span>
+            </div>
           </div>
         </Link>
 

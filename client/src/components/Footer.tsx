@@ -28,13 +28,20 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-24 mb-16">
           {/* Brand */}
           <div className="space-y-6">
-            <div className="flex flex-col">
-              <span className="font-serif text-2xl font-bold tracking-widest uppercase text-white">
-                King Of Kings
-              </span>
-              <span className="text-[0.6rem] tracking-[0.3em] uppercase text-primary">
-                Real Estate Services
-              </span>
+            <div className="flex items-center gap-3">
+              <img 
+                src="/static/logo.png" 
+                alt="King Of Kings Logo" 
+                className="h-10 w-auto" 
+              />
+              <div className="flex flex-col">
+                <span className="font-serif text-xl font-bold tracking-widest uppercase text-white leading-none">
+                  King Of Kings
+                </span>
+                <span className="text-[0.55rem] tracking-[0.3em] uppercase text-primary mt-1">
+                  Real Estate Services
+                </span>
+              </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Setting the standard for luxury real estate and investment management across the Greater Toronto Area and cottage country.
