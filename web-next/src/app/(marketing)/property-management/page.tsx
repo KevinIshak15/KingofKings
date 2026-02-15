@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { propertyManagementCities } from "@/lib/property-management-cities";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 import { JsonLd } from "@/lib/seo/schema";
 import { buildLocalBusinessSchema, buildServiceSchemaFor } from "@/lib/seo/schema";
 
