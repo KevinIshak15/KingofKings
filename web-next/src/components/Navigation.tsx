@@ -6,7 +6,9 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ServicesMegaMenu } from "./ServicesMegaMenu";
+import { ListingsMegaMenu } from "./ListingsMegaMenu";
 import { SERVICES_MENU } from "@/lib/services-menu";
+import { LISTINGS_MENU } from "@/lib/listings-menu";
 
 const links = [
   { href: "/", label: "HOME" },
@@ -19,8 +21,11 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [listingsOpen, setListingsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileListingsOpen, setMobileListingsOpen] = useState(false);
   const servicesTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const listingsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -30,7 +35,10 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    if (scrolled) setServicesOpen(false);
+    if (scrolled) {
+      setServicesOpen(false);
+      setListingsOpen(false);
+    }
   }, [scrolled]);
 
   const handleServicesMouseEnter = () => {
@@ -45,7 +53,20 @@ export function Navigation() {
     servicesTimeoutRef.current = setTimeout(() => setServicesOpen(false), 100);
   };
 
+  const handleListingsMouseEnter = () => {
+    if (listingsTimeoutRef.current) {
+      clearTimeout(listingsTimeoutRef.current);
+      listingsTimeoutRef.current = null;
+    }
+    setListingsOpen(true);
+  };
+
+  const handleListingsMouseLeave = () => {
+    listingsTimeoutRef.current = setTimeout(() => setListingsOpen(false), 100);
+  };
+
   const isServicesActive = pathname?.startsWith("/services");
+  const isListingsActive = pathname?.startsWith("/listings");
 
   return (
     <header className={cn("fixed top-0 w-full z-50 transition-all duration-300 py-4", scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent")}>
@@ -92,6 +113,27 @@ export function Navigation() {
             </Link>
           </div>
 
+          <div
+            className="relative"
+            onMouseEnter={handleListingsMouseEnter}
+            onMouseLeave={handleListingsMouseLeave}
+          >
+            <Link
+              href="/listings"
+              className={cn(
+                "whitespace-nowrap flex items-center gap-1 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary",
+                isListingsActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled ? "text-secondary/80" : "text-white/90"
+              )}
+              aria-expanded={listingsOpen}
+              aria-haspopup="true"
+              aria-controls="listings-mega-menu"
+              id="listings-trigger"
+            >
+              LISTINGS
+              <ChevronDown className={cn("w-4 h-4 transition-transform", listingsOpen && "rotate-180")} />
+            </Link>
+          </div>
+
           {links.slice(2).map((link) => {
             const isActive = pathname === link.href || (link.href === "/blog" && pathname?.startsWith("/blog"));
             return (
@@ -115,6 +157,14 @@ export function Navigation() {
         onClose={() => setServicesOpen(false)}
         onMouseEnter={handleServicesMouseEnter}
         onMouseLeave={handleServicesMouseLeave}
+        scrolled={scrolled}
+      />
+
+      <ListingsMegaMenu
+        isOpen={listingsOpen}
+        onClose={() => setListingsOpen(false)}
+        onMouseEnter={handleListingsMouseEnter}
+        onMouseLeave={handleListingsMouseLeave}
         scrolled={scrolled}
       />
 
@@ -148,6 +198,32 @@ export function Navigation() {
                       ))}
                     </div>
                   </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="w-full">
+            <button
+              type="button"
+              className="flex items-center justify-center gap-2 text-white text-2xl font-serif hover:text-primary transition-colors w-full"
+              onClick={() => setMobileListingsOpen(!mobileListingsOpen)}
+              aria-expanded={mobileListingsOpen}
+            >
+              LISTINGS
+              <ChevronDown className={cn("w-5 h-5 transition-transform", mobileListingsOpen && "rotate-180")} />
+            </button>
+            {mobileListingsOpen && (
+              <div className="mt-4 pl-6 space-y-4 border-l-2 border-primary/30">
+                {LISTINGS_MENU.map((cat) => (
+                  <Link
+                    key={cat.id}
+                    href={cat.href}
+                    className="text-primary font-serif text-lg block"
+                    onClick={() => { setIsOpen(false); setMobileListingsOpen(false); }}
+                  >
+                    {cat.label}
+                  </Link>
                 ))}
               </div>
             )}

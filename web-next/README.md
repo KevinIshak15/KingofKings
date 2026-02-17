@@ -29,6 +29,10 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 
 - `NEXT_PUBLIC_SITE_URL` — Used for canonical URLs, sitemap, and Open Graph. Set to your production domain.
 - `NEXT_PUBLIC_API_URL` — Base URL for the Express API (contact, investors, analysis, subscribers). Use empty string for same-origin.
+- `NEXT_PUBLIC_ADMIN_EMAIL` — Admin allowlist email (e.g. `md.ragy@gmail.com`). Used client-side for admin checks.
+- `ADMIN_EMAIL` — Server-side admin email (same value). Used by `/api/admin/setup`.
+- `NEXT_PUBLIC_FIREBASE_*` — Firebase client config (API key, auth domain, project ID, etc.).
+- `FIREBASE_ADMIN_PROJECT_ID`, `FIREBASE_ADMIN_CLIENT_EMAIL`, `FIREBASE_ADMIN_PRIVATE_KEY` — Firebase Admin SDK for `/api/admin/setup` and `check-setup`.
 
 ## Build
 

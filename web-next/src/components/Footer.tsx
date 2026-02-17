@@ -1,10 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { useAdmin } from "@/context/AdminContext";
 
 export function Footer() {
+  const { isAdmin, logout } = useAdmin();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await logout();
+    router.push("/");
+  }
   return (
     <footer className="bg-secondary text-white pt-24 pb-12">
       <div className="container-wide">
@@ -53,7 +62,15 @@ export function Footer() {
         </div>
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} King Of Kings Real Estate Services. All rights reserved.</p>
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            {isAdmin && (
+              <>
+                <span className="text-primary/70">Admin</span>
+                <button type="button" onClick={handleLogout} className="hover:text-white transition-colors">
+                  Logout
+                </button>
+              </>
+            )}
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>

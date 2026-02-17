@@ -9,13 +9,14 @@ interface HeroProps {
   subtitle: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
+  adminSlot?: React.ReactNode;
   overlayOpacity?: string;
   large?: boolean;
   badgeText?: string;
   badgeTagline?: string;
 }
 
-export function Hero({ image, title, subtitle, primaryCta, secondaryCta, overlayOpacity = "bg-black/40", large = false, badgeText, badgeTagline }: HeroProps) {
+export function Hero({ image, title, subtitle, primaryCta, secondaryCta, adminSlot, overlayOpacity = "bg-black/40", large = false, badgeText, badgeTagline }: HeroProps) {
   return (
     <div className={`relative w-full ${large ? "h-screen" : "h-[60vh]"} overflow-hidden flex items-center justify-center`}>
       <div
@@ -61,6 +62,7 @@ export function Hero({ image, title, subtitle, primaryCta, secondaryCta, overlay
                 </Link>
               )
             )}
+            {adminSlot}
           </div>
         </motion.div>
       </div>

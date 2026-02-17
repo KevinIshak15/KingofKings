@@ -17,6 +17,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/property-management`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/management`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/listings`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+  ];
+
+  // Listings category pages
+  const listingsPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/listings/for-sale-home`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${SITE_URL}/listings/for-sale-condo`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${SITE_URL}/listings/for-rent-home`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${SITE_URL}/listings/for-rent-condo`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
+    { url: `${SITE_URL}/listings/commercial`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.8 },
   ];
 
   // Service sub-pages
@@ -68,6 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...corePages,
     ...servicePages,
+    ...listingsPages,
     ...propertyManagementCityPages,
     ...managementCityPages,
     ...blogCategoryPages,
