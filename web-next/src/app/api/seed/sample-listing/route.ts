@@ -33,7 +33,6 @@ export async function GET() {
       });
     }
 
-    const now = new Date();
     const ref = await db.collection("listings").add({
       status: "published",
       listingType: "sale",
