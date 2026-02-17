@@ -29,7 +29,7 @@ export default function NewListingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-12 px-4">
+    <div className="min-h-screen bg-muted pt-24 pb-12 px-4">
       <div className="container-wide">
         <ListingEditorForm />
       </div>

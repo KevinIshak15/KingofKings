@@ -2,6 +2,7 @@
 
 import type { ListingFormValues } from "@/lib/listings/schema";
 import type { ListingStatus } from "@/lib/listings/types";
+import { OptimizedListingImage } from "./OptimizedListingImage";
 
 interface ListingPreviewCardProps {
   listing: ListingFormValues;
@@ -26,13 +27,14 @@ export function ListingPreviewCard({ listing, status }: ListingPreviewCardProps)
 
   return (
     <div className="bg-white border border-gray-200 overflow-hidden">
-      <div className="aspect-[4/3] bg-muted relative">
+      <div className="aspect-[4/3] bg-muted relative overflow-hidden">
         {img ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
+          <OptimizedListingImage
             src={img}
             alt={listing.images?.[0]?.alt || listing.title || ""}
-            className="w-full h-full object-cover"
+            fill
+            sizes="400px"
+            className="object-cover"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">

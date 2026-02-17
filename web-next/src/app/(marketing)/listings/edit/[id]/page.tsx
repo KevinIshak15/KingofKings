@@ -48,7 +48,7 @@ export default function EditListingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-muted py-12 px-4">
+    <div className="min-h-screen bg-muted pt-24 pb-12 px-4">
       <div className="container-wide">
         <ListingEditorForm listing={listing} listingId={id} />
       </div>

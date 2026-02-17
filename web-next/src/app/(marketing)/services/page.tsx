@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
 import { buildLocalBusinessSchema, buildServiceSchemaFor, buildFAQSchema } from "@/lib/seo/schema";
+import { FaqAccordion } from "@/components/FaqAccordion";
 import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
@@ -164,14 +165,7 @@ export default function ServicesPage() {
       <section className="section-padding bg-muted">
         <div className="container-wide max-w-3xl">
           <h2 className="font-serif text-3xl md:text-4xl text-secondary mb-12">Frequently Asked Questions</h2>
-          <div className="space-y-10">
-            {faqs.map((faq, i) => (
-              <div key={i}>
-                <h3 className="font-serif text-xl text-secondary font-semibold mb-3">{faq.question}</h3>
-                <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
+          <FaqAccordion faqs={faqs} />
         </div>
       </section>
 

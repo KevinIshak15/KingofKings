@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ListingImage } from "@/lib/listings/types";
+import { OptimizedListingImage } from "./OptimizedListingImage";
 
 interface ListingGalleryProps {
   images: ListingImage[];
@@ -26,11 +27,13 @@ export function ListingGallery({ images, alt = "" }: ListingGalleryProps) {
   return (
     <div className="relative">
       <div className="aspect-[4/3] relative overflow-hidden bg-muted">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <OptimizedListingImage
           src={images[activeIndex].url}
           alt={images[activeIndex].alt || alt}
-          className="w-full h-full object-cover"
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 800px"
+          className="object-cover"
         />
         {images.length > 1 && (
           <>
@@ -60,12 +63,11 @@ export function ListingGallery({ images, alt = "" }: ListingGalleryProps) {
               key={img.url}
               type="button"
               onClick={() => setActiveIndex(i)}
-              className={`shrink-0 w-16 h-12 rounded overflow-hidden border-2 transition-colors ${
+              className={`shrink-0 w-16 h-12 rounded overflow-hidden border-2 transition-colors relative ${
                 i === activeIndex ? "border-primary" : "border-transparent"
               }`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt={img.alt} className="w-full h-full object-cover" />
+              <OptimizedListingImage src={img.url} alt={img.alt} fill sizes="64px" className="object-cover" />
             </button>
           ))}
         </div>

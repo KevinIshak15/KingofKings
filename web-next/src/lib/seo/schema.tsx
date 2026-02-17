@@ -15,12 +15,13 @@ export function buildLocalBusinessSchema(cityName?: string) {
     email: "concierge@kingofkings.com",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Luxury Lane, Suite 100",
-      addressLocality: "Toronto",
+      streetAddress: "7145 West Credit Ave, Building 1, Suite 100",
+      addressLocality: "Mississauga",
       addressRegion: "ON",
-      postalCode: "M5V 2T6",
+      postalCode: "L5N 6J7",
       addressCountry: "CA",
     },
+    openingHours: "Mo-Su 00:00-23:59",
     areaServed: cityName ? { "@type": "City", name: cityName } : undefined,
     priceRange: "$$",
   };

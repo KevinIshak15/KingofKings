@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { Listing } from "@/lib/listings/types";
+import { OptimizedListingImage } from "./OptimizedListingImage";
 
 interface ListingCardProps {
   listing: Listing;
@@ -31,11 +32,12 @@ export function ListingCard({ listing, showDraftBadge }: ListingCardProps) {
       <div className="bg-white border border-gray-200 overflow-hidden transition-all duration-300 hover:border-primary/20 group h-full flex flex-col">
         <div className="aspect-[4/3] bg-muted relative overflow-hidden">
           {img ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <OptimizedListingImage
               src={img}
               alt={listing.images?.[0]?.alt || listing.title || ""}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">

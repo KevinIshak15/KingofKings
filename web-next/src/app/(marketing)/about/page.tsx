@@ -29,9 +29,9 @@ export default function AboutPage() {
         <div className="container-wide">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-6">Our Leadership</h2>
-            <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-8 leading-tight">Meet the People Behind King of Kings Group</h3>
+            <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-8 leading-tight">The Vision Behind King of Kings Group</h3>
             <p className="text-gray-600 leading-relaxed text-lg md:text-xl">
-              Our team brings decades of combined experience in real estate, property management, and investment strategy across the Greater Toronto Area.
+              Over a decade of experience in real estate, property management, and investment strategy across the Greater Toronto Area.
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -147,7 +147,7 @@ export default function AboutPage() {
 
       <section className="section-padding bg-muted">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
             <div>
               <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4">Our Approach</h2>
               <h3 className="font-serif text-4xl text-secondary mb-8">Asset Stewardship with an Investor Mindset</h3>
@@ -191,8 +191,8 @@ export default function AboutPage() {
                 Explore Property Management <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            <div className="relative w-full max-w-sm mx-auto lg:mx-0">
-              <Image src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" alt="King of Kings property management office in the Greater Toronto Area" width={400} height={600} className="w-full aspect-[3/4] object-cover object-top grayscale opacity-90" />
+            <div className="relative w-full min-h-[400px] lg:h-full">
+              <Image src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&h=1200&fit=crop&auto=format" alt="King of Kings property management — professional real estate asset stewardship in the GTA" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-top grayscale opacity-90" />
             </div>
           </div>
         </div>

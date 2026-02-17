@@ -5,6 +5,8 @@
 @tailwind utilities;
 
 :root {
+  --font-sans: "Montserrat", sans-serif;
+  --font-serif: "Playfair Display", serif;
   --background: 0 0% 100%;
   --foreground: 0 0% 7%;
   --primary: 44 54% 53%;

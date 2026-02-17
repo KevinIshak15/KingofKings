@@ -67,17 +67,18 @@ export function Navigation() {
 
   const isServicesActive = pathname?.startsWith("/services");
   const isListingsActive = pathname?.startsWith("/listings");
+  const isEditorPage = pathname === "/listings/new" || pathname?.startsWith("/listings/edit/");
 
   return (
-    <header className={cn("fixed top-0 w-full z-50 transition-all duration-300 py-4", scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent")}>
+    <header className={cn("fixed top-0 w-full z-50 transition-all duration-300 py-4", scrolled || isEditorPage ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent")}>
       <div className="container-wide flex items-center justify-between gap-8">
         <Link href="/" className="z-50 shrink-0">
           <div className="flex items-center gap-3 cursor-pointer group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="King Of Kings Logo" className="h-12 w-auto transition-transform duration-300 group-hover:scale-110" />
+            <img src="/logo.png" alt="King Of Kings Logo" className="h-16 w-auto transition-transform duration-300 group-hover:scale-110" />
             <div className="flex flex-col">
-              <span className={cn("font-serif text-xl font-bold tracking-widest uppercase transition-colors leading-none whitespace-nowrap", scrolled ? "text-secondary" : "text-primary")}>King Of Kings</span>
-              <span className={cn("text-[0.55rem] tracking-[0.3em] uppercase mt-1 transition-colors whitespace-nowrap", scrolled ? "text-primary" : "text-white")}>Real Estate Services</span>
+              <span className={cn("font-serif text-xl font-bold tracking-widest uppercase transition-colors leading-none whitespace-nowrap", scrolled || isEditorPage ? "text-secondary" : "text-primary")}>King Of Kings</span>
+              <span className={cn("text-[0.55rem] tracking-[0.3em] uppercase mt-1 transition-colors whitespace-nowrap", scrolled || isEditorPage ? "text-primary" : "text-white")}>Real Estate Services</span>
             </div>
           </div>
         </Link>
@@ -87,7 +88,7 @@ export function Navigation() {
             const isActive = pathname === link.href;
             return (
               <Link key={link.href} href={link.href} className="whitespace-nowrap">
-                <span className={cn("text-sm font-medium uppercase tracking-wider cursor-pointer transition-colors hover:text-primary", isActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled ? "text-secondary/80" : "text-white/90")}>{link.label}</span>
+                <span className={cn("text-sm font-medium uppercase tracking-wider cursor-pointer transition-colors hover:text-primary", isActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled || isEditorPage ? "text-secondary/80" : "text-white/90")}>{link.label}</span>
               </Link>
             );
           })}
@@ -101,7 +102,7 @@ export function Navigation() {
               href="/services"
               className={cn(
                 "whitespace-nowrap flex items-center gap-1 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary",
-                isServicesActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled ? "text-secondary/80" : "text-white/90"
+                isServicesActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled || isEditorPage ? "text-secondary/80" : "text-white/90"
               )}
               aria-expanded={servicesOpen}
               aria-haspopup="true"
@@ -122,7 +123,7 @@ export function Navigation() {
               href="/listings"
               className={cn(
                 "whitespace-nowrap flex items-center gap-1 text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary",
-                isListingsActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled ? "text-secondary/80" : "text-white/90"
+                isListingsActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled || isEditorPage ? "text-secondary/80" : "text-white/90"
               )}
               aria-expanded={listingsOpen}
               aria-haspopup="true"
@@ -138,17 +139,17 @@ export function Navigation() {
             const isActive = pathname === link.href || (link.href === "/blog" && pathname?.startsWith("/blog"));
             return (
               <Link key={link.href} href={link.href} className="whitespace-nowrap">
-                <span className={cn("text-sm font-medium uppercase tracking-wider cursor-pointer transition-colors hover:text-primary", isActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled ? "text-secondary/80" : "text-white/90")}>{link.label}</span>
+                <span className={cn("text-sm font-medium uppercase tracking-wider cursor-pointer transition-colors hover:text-primary", isActive ? "text-primary border-b-2 border-primary pb-0.5" : scrolled || isEditorPage ? "text-secondary/80" : "text-white/90")}>{link.label}</span>
               </Link>
             );
           })}
           <Link href="/contact">
-            <button className={cn("bg-primary hover:bg-primary/90 px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 rounded-md", scrolled ? "text-secondary" : "text-white")}>Book Consultation</button>
+            <button className={cn("bg-primary hover:bg-primary/90 px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 rounded-md", scrolled || isEditorPage ? "text-secondary" : "text-white")}>Book Consultation</button>
           </Link>
         </nav>
 
         <button className="lg:hidden z-50 text-primary" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
-          {isOpen ? <X className="h-8 w-8" /> : <Menu className={cn("h-8 w-8", scrolled ? "text-secondary" : "text-white")} />}
+          {isOpen ? <X className="h-8 w-8" /> : <Menu className={cn("h-8 w-8", scrolled || isEditorPage ? "text-secondary" : "text-white")} />}
         </button>
       </div>
 

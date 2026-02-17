@@ -9,6 +9,7 @@ import { JsonLd } from "@/lib/seo/schema";
 import { buildLocalBusinessSchema, buildFAQSchema } from "@/lib/seo/schema";
 import { SERVICES_MENU } from "@/lib/services-menu";
 import { ContactForm } from "@/app/(marketing)/contact/ContactForm";
+import { FaqAccordion } from "@/components/FaqAccordion";
 import { getAllPosts } from "@/lib/blog";
 import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 
@@ -202,14 +203,7 @@ export default function HomePage() {
         <div className="container-wide max-w-3xl">
           <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4 text-center">FAQ</h2>
           <h3 className="font-serif text-3xl md:text-4xl text-secondary mb-12 text-center">Frequently Asked Questions</h3>
-          <div className="space-y-10">
-            {HOMEPAGE_FAQS.map((faq, i) => (
-              <div key={i}>
-                <h4 className="font-serif text-xl text-secondary font-semibold mb-3">{faq.question}</h4>
-                <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
+          <FaqAccordion faqs={HOMEPAGE_FAQS} />
           <div className="text-center mt-12">
             <Link href="/contact" className="inline-flex items-center text-secondary font-bold text-xs uppercase tracking-widest hover:text-primary transition-colors">
               Have more questions? Contact us <ArrowRight className="ml-2 w-4 h-4" />

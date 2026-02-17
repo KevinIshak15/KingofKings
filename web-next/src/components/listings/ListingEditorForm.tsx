@@ -191,20 +191,21 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
   }, [currentId, toast, form]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="font-serif text-2xl md:text-3xl text-secondary">
-            {listing ? "Edit Listing" : "New Listing"}
-          </h1>
-          <Link
-            href="/listings"
-            className="text-sm text-primary hover:underline font-medium"
-          >
-            ← Back to Listings
-          </Link>
-        </div>
+    <div className="space-y-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h1 className="font-serif text-2xl md:text-3xl text-secondary">
+          {listing ? "Edit Listing" : "New Listing"}
+        </h1>
+        <Link
+          href="/listings"
+          className="text-sm text-primary hover:underline font-medium shrink-0"
+        >
+          ← Back to Listings
+        </Link>
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="space-y-6">
         <form className="space-y-4">
           <Accordion type="multiple" defaultValue={["basics", "location", "description"]} className="w-full">
             <AccordionItem value="basics">
@@ -539,9 +540,9 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
             </AccordionItem>
           </Accordion>
         </form>
-      </div>
+        </div>
 
-      <div className="lg:sticky lg:top-8 h-fit">
+        <div className="lg:sticky lg:top-8 h-fit">
         <ListingPreviewCard listing={watchValues} status={watchValues.status} />
         <div className="mt-6 flex flex-col gap-2">
           <Button onClick={onSaveDraft} disabled={saving} variant="outline">
@@ -560,6 +561,7 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
               Archive
             </Button>
           )}
+        </div>
         </div>
       </div>
     </div>

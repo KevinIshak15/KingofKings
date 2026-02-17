@@ -2,10 +2,11 @@ import { MetadataRoute } from "next";
 import { cities } from "@/lib/cities";
 import { propertyManagementCities } from "@/lib/property-management-cities";
 import { getAllPosts, BLOG_CATEGORIES, getCategorySlug } from "@/lib/blog";
+import { listPublishedListingsServer } from "@/lib/listings/server";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kingofkings.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   // Core pages – highest priority
@@ -69,6 +70,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Published listing detail pages
+  const listings = await listPublishedListingsServer({ limit: 500 });
+  const listingDetailPages: MetadataRoute.Sitemap = listings
+    .filter((l) => l.slug)
+    .map((listing) => ({
+      url: `${SITE_URL}/listings/${listing.slug}`,
+      lastModified: listing.updatedAt ? new Date(listing.updatedAt) : now,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }));
+
   // Legal pages
   const legalPages: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/privacy-policy`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
@@ -79,6 +91,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...corePages,
     ...servicePages,
     ...listingsPages,
+    ...listingDetailPages,
     ...propertyManagementCityPages,
     ...managementCityPages,
     ...blogCategoryPages,

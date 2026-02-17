@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { SITE_PHONE, SITE_PHONE_TEL, SITE_ADDRESS_FULL, SITE_EMAIL } from "@/lib/site";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
 
@@ -29,10 +29,10 @@ export function Footer() {
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">Setting the standard for luxury real estate and investment management across the Greater Toronto Area and cottage country.</p>
             <div className="flex space-x-4">
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-primary transition-colors"><Instagram size={20} /></a>
-              <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-primary transition-colors"><Linkedin size={20} /></a>
-              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-primary transition-colors"><Facebook size={20} /></a>
-              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-primary transition-colors"><Twitter size={20} /></a>
+              <a href="https://www.instagram.com/ragymoussa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-gray-400 hover:text-primary transition-colors"><Instagram size={20} /></a>
+              <a href="https://www.linkedin.com/in/ragymoussa/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-gray-400 hover:text-primary transition-colors"><Linkedin size={20} /></a>
+              <a href="https://www.facebook.com/moussahomes.ca/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-gray-400 hover:text-primary transition-colors"><Facebook size={20} /></a>
+              <a href="https://x.com/ragymoussa" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-gray-400 hover:text-primary transition-colors"><Twitter size={20} /></a>
             </div>
           </div>
           <div>
@@ -51,9 +51,9 @@ export function Footer() {
           <div>
             <h4 className="font-serif text-lg mb-6">Contact</h4>
             <ul className="space-y-4 text-sm text-gray-400">
-              <li>123 Luxury Lane, Toronto, ON</li>
+              <li>{SITE_ADDRESS_FULL}</li>
               <li><a href={SITE_PHONE_TEL} className="hover:text-primary transition-colors">{SITE_PHONE}</a></li>
-              <li><a href="mailto:concierge@kingofkings.com" className="text-primary hover:text-primary/80 transition-colors">concierge@kingofkings.com</a></li>
+              <li><a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:text-primary/80 transition-colors">{SITE_EMAIL}</a></li>
             </ul>
             <Link href="/contact" className="inline-block mt-4 text-primary font-medium text-sm uppercase tracking-wider hover:text-primary/80 transition-colors">
               Get in touch
