@@ -30,6 +30,9 @@ export async function GET(
 
   const doc = snap.docs[0];
   const d = doc.data();
+  const toDate = (v: unknown) => (v && typeof v === "object" && "toDate" in v && typeof (v as { toDate: () => Date }).toDate === "function")
+    ? (v as { toDate: () => Date }).toDate().toISOString()
+    : null;
   const listing = {
     id: doc.id,
     status: d.status,
@@ -62,9 +65,44 @@ export async function GET(
     slug: d.slug ?? "",
     seoTitle: d.seoTitle ?? null,
     seoDescription: d.seoDescription ?? null,
-    createdAt: d.createdAt?.toDate?.()?.toISOString?.() ?? null,
-    updatedAt: d.updatedAt?.toDate?.()?.toISOString?.() ?? null,
-    publishedAt: d.publishedAt?.toDate?.()?.toISOString?.() ?? null,
+    createdAt: toDate(d.createdAt) ?? null,
+    updatedAt: toDate(d.updatedAt) ?? null,
+    publishedAt: toDate(d.publishedAt) ?? null,
+    listingDescription: d.listingDescription ?? null,
+    locationDescription: d.locationDescription ?? null,
+    timeOnSite: d.timeOnSite ?? null,
+    communityName: d.communityName ?? null,
+    areaName: d.areaName ?? null,
+    bathsObj: d.bathsObj ?? null,
+    squareFeet: d.squareFeet ?? null,
+    squareFootageDisplay: d.squareFootageDisplay ?? null,
+    buildingType: d.buildingType ?? null,
+    storeys: d.storeys ?? null,
+    titleType: d.titleType ?? null,
+    landSize: d.landSize ?? null,
+    ageOfBuilding: d.ageOfBuilding ?? null,
+    annualPropertyTaxes: d.annualPropertyTaxes ?? null,
+    parkingType: d.parkingType ?? null,
+    totalParkingSpaces: d.totalParkingSpaces ?? null,
+    bedroomsAboveGrade: d.bedroomsAboveGrade ?? null,
+    bathroomsTotal: d.bathroomsTotal ?? null,
+    bathroomsPartial: d.bathroomsPartial ?? null,
+    flooring: d.flooring ?? null,
+    basementType: d.basementType ?? null,
+    features: d.features ?? null,
+    foundationType: d.foundationType ?? null,
+    style: d.style ?? null,
+    rentalEquipment: d.rentalEquipment ?? null,
+    heatingType: d.heatingType ?? null,
+    utilityType: d.utilityType ?? null,
+    utilitySewer: d.utilitySewer ?? null,
+    water: d.water ?? null,
+    exteriorFinish: d.exteriorFinish ?? null,
+    rooms: d.rooms ?? undefined,
+    unitsPreferenceDefault: d.unitsPreferenceDefault ?? null,
+    lotFrontage: d.lotFrontage ?? null,
+    lotDepth: d.lotDepth ?? null,
+    media: d.media ?? null,
   };
 
   return NextResponse.json(listing);

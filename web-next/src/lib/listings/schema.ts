@@ -33,6 +33,26 @@ const openHouseSchema = z.object({
   notes: z.string().optional(),
 });
 
+const roomSchema = z.object({
+  level: z.string(),
+  name: z.string(),
+  dimensionsImperial: z.string().optional(),
+  dimensionsMetric: z.string().optional(),
+});
+
+const bathsObjSchema = z.object({
+  total: z.number(),
+  partial: z.number().optional(),
+}).nullable().optional();
+
+const squareFeetSchema = z.object({
+  min: z.number().optional(),
+  max: z.number().optional(),
+  display: z.string().optional(),
+}).nullable().optional();
+
+const urlOptional = z.string().optional().refine((v) => !v || v === "" || /^https?:\/\//.test(v), "Invalid URL");
+
 export const listingFormSchema = z.object({
   status: z.enum(["draft", "published", "archived"]).default("draft"),
   listingType: z.enum(["sale", "rent", "commercial"]),
@@ -57,12 +77,48 @@ export const listingFormSchema = z.object({
   exterior: z.string().nullable().optional(),
   amenities: z.array(z.string()).optional(),
   appliancesIncluded: z.array(z.string()).optional(),
-  virtualTourUrl: z.string().optional().refine((v) => !v || v === "" || /^https?:\/\//.test(v), "Invalid URL"),
-  videoUrl: z.string().optional().refine((v) => !v || v === "" || /^https?:\/\//.test(v), "Invalid URL"),
+  virtualTourUrl: urlOptional,
+  videoUrl: urlOptional,
   openHouses: z.array(openHouseSchema).optional(),
   images: z.array(imageSchema),
   seoTitle: z.string().nullable().optional(),
   seoDescription: z.string().nullable().optional(),
+
+  // Extended fields
+  listingDescription: z.string().nullable().optional(),
+  locationDescription: z.string().nullable().optional(),
+  timeOnSite: z.string().nullable().optional(),
+  communityName: z.string().nullable().optional(),
+  areaName: z.string().nullable().optional(),
+  bathsObj: bathsObjSchema,
+  squareFeet: squareFeetSchema,
+  squareFootageDisplay: z.string().nullable().optional(),
+  buildingType: z.string().nullable().optional(),
+  storeys: z.union([z.number(), z.string()]).nullable().optional(),
+  titleType: z.string().nullable().optional(),
+  landSize: z.string().nullable().optional(),
+  ageOfBuilding: z.string().nullable().optional(),
+  annualPropertyTaxes: z.union([z.number(), z.string()]).nullable().optional(),
+  parkingType: z.string().nullable().optional(),
+  totalParkingSpaces: z.number().nullable().optional(),
+  bedroomsAboveGrade: z.number().nullable().optional(),
+  bathroomsTotal: z.number().nullable().optional(),
+  bathroomsPartial: z.number().nullable().optional(),
+  flooring: z.string().nullable().optional(),
+  basementType: z.string().nullable().optional(),
+  features: z.string().nullable().optional(),
+  foundationType: z.string().nullable().optional(),
+  style: z.string().nullable().optional(),
+  rentalEquipment: z.string().nullable().optional(),
+  heatingType: z.string().nullable().optional(),
+  utilityType: z.string().nullable().optional(),
+  utilitySewer: z.string().nullable().optional(),
+  water: z.string().nullable().optional(),
+  exteriorFinish: z.string().nullable().optional(),
+  rooms: z.array(roomSchema).optional(),
+  unitsPreferenceDefault: z.enum(["imperial", "metric"]).nullable().optional(),
+  lotFrontage: z.string().nullable().optional(),
+  lotDepth: z.string().nullable().optional(),
 }).refine((data) => {
   if (data.status !== "published") return true;
   return !!(
@@ -121,4 +177,38 @@ export const defaultListingFormValues: ListingFormValues = {
   images: [],
   seoTitle: null,
   seoDescription: null,
+  listingDescription: null,
+  locationDescription: null,
+  timeOnSite: null,
+  communityName: null,
+  areaName: null,
+  bathsObj: null,
+  squareFeet: null,
+  squareFootageDisplay: null,
+  buildingType: null,
+  storeys: null,
+  titleType: null,
+  landSize: null,
+  ageOfBuilding: null,
+  annualPropertyTaxes: null,
+  parkingType: null,
+  totalParkingSpaces: null,
+  bedroomsAboveGrade: null,
+  bathroomsTotal: null,
+  bathroomsPartial: null,
+  flooring: null,
+  basementType: null,
+  features: null,
+  foundationType: null,
+  style: null,
+  rentalEquipment: null,
+  heatingType: null,
+  utilityType: null,
+  utilitySewer: null,
+  water: null,
+  exteriorFinish: null,
+  rooms: [],
+  unitsPreferenceDefault: "imperial",
+  lotFrontage: null,
+  lotDepth: null,
 };

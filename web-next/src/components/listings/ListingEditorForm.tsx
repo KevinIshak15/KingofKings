@@ -2,8 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Accordion,
   AccordionContent,
@@ -28,12 +29,18 @@ import {
 import { ListingMediaUploader } from "./ListingMediaUploader";
 import { ListingPreviewCard } from "./ListingPreviewCard";
 import { createListing, updateListing } from "@/lib/listings/crud";
+import { generateListingSlug } from "@/lib/listings/slug";
 import type { Listing } from "@/lib/listings/types";
 import { useToast } from "@/hooks/use-toast";
 
 interface ListingEditorFormProps {
   listing?: Listing | null;
   listingId?: string | null;
+}
+
+function arrOrStrToStr(v: string[] | string | null | undefined): string | null {
+  if (v == null) return null;
+  return Array.isArray(v) ? v.join(", ") : String(v);
 }
 
 function formValuesFromListing(l: Listing): ListingFormValues {
@@ -67,11 +74,46 @@ function formValuesFromListing(l: Listing): ListingFormValues {
     images: l.images ?? [],
     seoTitle: l.seoTitle ?? null,
     seoDescription: l.seoDescription ?? null,
+    listingDescription: l.listingDescription ?? null,
+    locationDescription: l.locationDescription ?? null,
+    timeOnSite: l.timeOnSite ?? null,
+    communityName: l.communityName ?? null,
+    areaName: l.areaName ?? null,
+    bathsObj: l.bathsObj ?? null,
+    squareFeet: l.squareFeet ?? null,
+    squareFootageDisplay: l.squareFootageDisplay ?? null,
+    buildingType: l.buildingType ?? null,
+    storeys: l.storeys ?? null,
+    titleType: l.titleType ?? null,
+    landSize: l.landSize ?? null,
+    ageOfBuilding: l.ageOfBuilding ?? null,
+    annualPropertyTaxes: l.annualPropertyTaxes ?? null,
+    parkingType: l.parkingType ?? null,
+    totalParkingSpaces: l.totalParkingSpaces ?? null,
+    bedroomsAboveGrade: l.bedroomsAboveGrade ?? null,
+    bathroomsTotal: l.bathroomsTotal ?? null,
+    bathroomsPartial: l.bathroomsPartial ?? null,
+    flooring: arrOrStrToStr(l.flooring),
+    basementType: l.basementType ?? null,
+    features: arrOrStrToStr(l.features),
+    foundationType: l.foundationType ?? null,
+    style: l.style ?? null,
+    rentalEquipment: arrOrStrToStr(l.rentalEquipment),
+    heatingType: l.heatingType ?? null,
+    utilityType: arrOrStrToStr(l.utilityType),
+    utilitySewer: l.utilitySewer ?? null,
+    water: l.water ?? null,
+    exteriorFinish: arrOrStrToStr(l.exteriorFinish),
+    rooms: l.rooms ?? [],
+    unitsPreferenceDefault: l.unitsPreferenceDefault ?? "imperial",
+    lotFrontage: l.lotFrontage ?? null,
+    lotDepth: l.lotDepth ?? null,
   };
 }
 
 export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps) {
   const { toast } = useToast();
+  const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [currentId, setCurrentId] = useState<string | null>(listingId ?? listing?.id ?? null);
 
@@ -80,18 +122,39 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
     defaultValues: listing ? formValuesFromListing(listing) : defaultListingFormValues,
   });
 
+  useEffect(() => {
+    if (listing) {
+      form.reset(formValuesFromListing(listing));
+    } else {
+      form.reset(defaultListingFormValues);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listing?.id, !!listing]);
+
   const watchValues = form.watch();
+
+  const buildPayload = useCallback((values: ListingFormValues, status: "draft" | "published") => {
+    const bathsTotal = values.bathroomsTotal ?? values.baths;
+    const bathsObj =
+      values.bathroomsTotal != null || values.bathroomsPartial != null
+        ? { total: bathsTotal ?? 0, partial: values.bathroomsPartial ?? 0 }
+        : null;
+    const rooms = (values.rooms ?? []).filter((r) => (r.level?.trim() || r.name?.trim()));
+    return {
+      ...values,
+      status,
+      virtualTourUrl: values.virtualTourUrl || null,
+      videoUrl: values.videoUrl || null,
+      bathsObj,
+      rooms,
+    };
+  }, []);
 
   const onSaveDraft = useCallback(async () => {
     setSaving(true);
     try {
       const values = form.getValues();
-      const payload = {
-        ...values,
-        status: "draft" as const,
-        virtualTourUrl: values.virtualTourUrl || null,
-        videoUrl: values.videoUrl || null,
-      };
+      const payload = buildPayload(values, "draft");
       if (currentId) {
         await updateListing(currentId, payload);
         toast({ title: "Draft saved" });
@@ -112,7 +175,7 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
     } finally {
       setSaving(false);
     }
-  }, [currentId, toast, form]);
+  }, [currentId, toast, form, buildPayload]);
 
   const onPublish = useCallback(async () => {
     const ok = await form.trigger();
@@ -129,20 +192,19 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
     setSaving(true);
     try {
       const values = form.getValues();
-      const payload = {
-        ...values,
-        status: "published" as const,
-        virtualTourUrl: values.virtualTourUrl || null,
-        videoUrl: values.videoUrl || null,
-      };
+      const payload = buildPayload(values, "published");
+      let slug: string;
       if (currentId) {
         await updateListing(currentId, payload);
+        slug = listing?.slug ?? generateListingSlug(values.address.city, values.address.street, values.listingType, currentId);
         toast({ title: "Published" });
       } else {
         const id = await createListing({ ...payload, slug: "" });
         setCurrentId(id);
+        slug = generateListingSlug(values.address.city, values.address.street, values.listingType, id);
         toast({ title: "Published" });
       }
+      router.push(`/listings/${slug}`);
     } catch (e) {
       toast({
         variant: "destructive",
@@ -152,13 +214,14 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
     } finally {
       setSaving(false);
     }
-  }, [currentId, toast, form]);
+  }, [currentId, toast, form, buildPayload, listing?.slug, router]);
 
   const onUnpublish = useCallback(async () => {
     if (!currentId) return;
     setSaving(true);
     try {
-      await updateListing(currentId, { ...form.getValues(), status: "draft", publishedAt: null });
+      const payload = buildPayload(form.getValues(), "draft");
+      await updateListing(currentId, { ...payload, publishedAt: null });
       form.setValue("status", "draft");
       toast({ title: "Unpublished" });
     } catch (e) {
@@ -170,7 +233,7 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
     } finally {
       setSaving(false);
     }
-  }, [currentId, toast, form]);
+  }, [currentId, toast, form, buildPayload]);
 
   const onArchive = useCallback(async () => {
     if (!currentId) return;
@@ -278,8 +341,49 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
                     <Input type="number" min={0} {...form.register("baths")} />
                   </div>
                   <div>
+                    <Label>Bathrooms Total</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={watchValues.bathroomsTotal ?? ""}
+                      onChange={(e) => form.setValue("bathroomsTotal", e.target.value ? Number(e.target.value) : null)}
+                      placeholder="Override"
+                    />
+                  </div>
+                  <div>
+                    <Label>Bathrooms Partial</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={watchValues.bathroomsPartial ?? ""}
+                      onChange={(e) => form.setValue("bathroomsPartial", e.target.value ? Number(e.target.value) : null)}
+                      placeholder="Optional"
+                    />
+                  </div>
+                  <div>
                     <Label>Sqft</Label>
                     <Input type="number" min={0} {...form.register("sqft")} />
+                  </div>
+                  <div>
+                    <Label>Square Footage Display</Label>
+                    <Input
+                      {...form.register("squareFootageDisplay")}
+                      placeholder="e.g. 1500 - 2000 sqft"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <Label>Time on Site</Label>
+                    <Input {...form.register("timeOnSite")} placeholder="e.g. 1 day" />
+                  </div>
+                  <div>
+                    <Label>Community Name</Label>
+                    <Input {...form.register("communityName")} placeholder="e.g. 1051 - Walker" />
+                  </div>
+                  <div>
+                    <Label>Area Name</Label>
+                    <Input {...form.register("areaName")} placeholder="e.g. Walker" />
                   </div>
                 </div>
               </AccordionContent>
@@ -320,6 +424,10 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
                   <Label>Country</Label>
                   <Input {...form.register("address.country")} />
                 </div>
+                <div>
+                  <Label>Location Description</Label>
+                  <Input {...form.register("locationDescription")} placeholder="e.g. Britannia Rd. and Tremaine Rd." />
+                </div>
               </AccordionContent>
             </AccordionItem>
 
@@ -343,6 +451,15 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
                   {form.formState.errors.description && (
                     <p className="text-sm text-destructive mt-1">{form.formState.errors.description.message}</p>
                   )}
+                </div>
+                <div>
+                  <Label>Listing Description (full)</Label>
+                  <textarea
+                    {...form.register("listingDescription")}
+                    rows={8}
+                    placeholder="Extended description for detail page (optional)"
+                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -369,8 +486,62 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
               </AccordionContent>
             </AccordionItem>
 
+            <AccordionItem value="property-summary">
+              <AccordionTrigger>5. Property Summary</AccordionTrigger>
+              <AccordionContent className="space-y-4 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div>
+                    <Label>Building Type</Label>
+                    <Input {...form.register("buildingType")} placeholder="e.g. House" />
+                  </div>
+                  <div>
+                    <Label>Storeys</Label>
+                    <Input
+                      value={watchValues.storeys != null ? String(watchValues.storeys) : ""}
+                      onChange={(e) => form.setValue("storeys", e.target.value || null)}
+                      placeholder="e.g. 2"
+                    />
+                  </div>
+                  <div>
+                    <Label>Title Type</Label>
+                    <Input {...form.register("titleType")} placeholder="e.g. Freehold" />
+                  </div>
+                  <div>
+                    <Label>Land Size</Label>
+                    <Input {...form.register("landSize")} placeholder="e.g. 26 x 90 FT" />
+                  </div>
+                  <div>
+                    <Label>Age of Building</Label>
+                    <Input {...form.register("ageOfBuilding")} placeholder="e.g. New building" />
+                  </div>
+                  <div>
+                    <Label>Annual Property Taxes</Label>
+                    <Input
+                      value={watchValues.annualPropertyTaxes != null ? String(watchValues.annualPropertyTaxes) : ""}
+                      onChange={(e) => form.setValue("annualPropertyTaxes", e.target.value ? e.target.value : null)}
+                      placeholder="e.g. $0 or 8500"
+                    />
+                  </div>
+                  <div>
+                    <Label>Parking Type</Label>
+                    <Input {...form.register("parkingType")} placeholder="e.g. Garage" />
+                  </div>
+                  <div>
+                    <Label>Total Parking Spaces</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={watchValues.totalParkingSpaces ?? ""}
+                      onChange={(e) => form.setValue("totalParkingSpaces", e.target.value ? Number(e.target.value) : null)}
+                      placeholder="Optional"
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="details">
-              <AccordionTrigger>5. Details</AccordionTrigger>
+              <AccordionTrigger>6. Details & Building</AccordionTrigger>
               <AccordionContent className="space-y-4 pt-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -398,6 +569,14 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
                         })
                       }
                     />
+                  </div>
+                  <div>
+                    <Label>Lot Frontage (display)</Label>
+                    <Input {...form.register("lotFrontage")} placeholder="e.g. 26 ft" />
+                  </div>
+                  <div>
+                    <Label>Lot Depth (display)</Label>
+                    <Input {...form.register("lotDepth")} placeholder="e.g. 90 ft" />
                   </div>
                   <div>
                     <Label>Acres</Label>
@@ -442,41 +621,197 @@ export function ListingEditorForm({ listing, listingId }: ListingEditorFormProps
                       }
                     />
                   </div>
+                  <div>
+                    <Label>Bedrooms above grade</Label>
+                    <Input
+                      type="number"
+                      min={0}
+                      value={watchValues.bedroomsAboveGrade ?? ""}
+                      onChange={(e) => form.setValue("bedroomsAboveGrade", e.target.value ? Number(e.target.value) : null)}
+                      placeholder="Optional"
+                    />
+                  </div>
+                  <div>
+                    <Label>Parking spots</Label>
+                    <Input
+                      type="number"
+                      value={watchValues.parking?.spots ?? ""}
+                      onChange={(e) =>
+                        form.setValue("parking", {
+                          ...watchValues.parking,
+                          spots: e.target.value ? Number(e.target.value) : null,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
                 <div>
                   <Label>Heating</Label>
                   <Input {...form.register("heating")} />
                 </div>
                 <div>
+                  <Label>Heating Type</Label>
+                  <Input {...form.register("heatingType")} placeholder="e.g. Forced air (Natural gas)" />
+                </div>
+                <div>
                   <Label>Cooling</Label>
-                  <Input {...form.register("cooling")} />
+                  <Input {...form.register("cooling")} placeholder="Comma-separated" />
+                </div>
+                <div>
+                  <Label>Flooring</Label>
+                  <Input {...form.register("flooring")} placeholder="e.g. Hardwood, Ceramic" />
                 </div>
                 <div>
                   <Label>Basement</Label>
                   <Input {...form.register("basement")} />
                 </div>
                 <div>
+                  <Label>Basement Type</Label>
+                  <Input {...form.register("basementType")} placeholder="e.g. Unfinished" />
+                </div>
+                <div>
+                  <Label>Features</Label>
+                  <Input {...form.register("features")} placeholder="e.g. Carpet Free" />
+                </div>
+                <div>
+                  <Label>Foundation Type</Label>
+                  <Input {...form.register("foundationType")} placeholder="e.g. Concrete" />
+                </div>
+                <div>
+                  <Label>Style</Label>
+                  <Input {...form.register("style")} placeholder="e.g. Semi-detached" />
+                </div>
+                <div>
+                  <Label>Rental Equipment</Label>
+                  <Input {...form.register("rentalEquipment")} placeholder="e.g. Water Heater, Water Heater - Tankless" />
+                </div>
+                <div>
+                  <Label>Utility Type</Label>
+                  <Input {...form.register("utilityType")} placeholder="Comma-separated" />
+                </div>
+                <div>
+                  <Label>Utility Sewer</Label>
+                  <Input {...form.register("utilitySewer")} placeholder="e.g. Sanitary sewer" />
+                </div>
+                <div>
+                  <Label>Water</Label>
+                  <Input {...form.register("water")} placeholder="e.g. Municipal water" />
+                </div>
+                <div>
                   <Label>Exterior</Label>
                   <Input {...form.register("exterior")} />
                 </div>
                 <div>
-                  <Label>Parking spots</Label>
+                  <Label>Exterior Finish</Label>
+                  <Input {...form.register("exteriorFinish")} placeholder="e.g. Brick, Stone" />
+                </div>
+                <div>
+                  <Label>Amenities</Label>
                   <Input
-                    type="number"
-                    value={watchValues.parking?.spots ?? ""}
+                    value={(watchValues.amenities ?? []).join(", ")}
                     onChange={(e) =>
-                      form.setValue("parking", {
-                        ...watchValues.parking,
-                        spots: e.target.value ? Number(e.target.value) : null,
-                      })
+                      form.setValue(
+                        "amenities",
+                        e.target.value ? e.target.value.split(",").map((s) => s.trim()).filter(Boolean) : []
+                      )
                     }
+                    placeholder="Comma-separated: Backyard, Deck, Garden"
                   />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
+            <AccordionItem value="rooms">
+              <AccordionTrigger>7. Rooms</AccordionTrigger>
+              <AccordionContent className="space-y-4 pt-2">
+                <p className="text-sm text-muted-foreground">
+                  Add room entries with level, name, and optional dimensions.
+                </p>
+                <div>
+                  <Label>Units preference</Label>
+                  <Select
+                    value={watchValues.unitsPreferenceDefault ?? "imperial"}
+                    onValueChange={(v) => form.setValue("unitsPreferenceDefault", v as "imperial" | "metric")}
+                  >
+                    <SelectTrigger className="w-40">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="imperial">Imperial</SelectItem>
+                      <SelectItem value="metric">Metric</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {(watchValues.rooms ?? []).map((room, i) => (
+                  <div key={i} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 items-end border p-3 rounded">
+                    <Input
+                      placeholder="Level"
+                      value={room.level}
+                      onChange={(e) => {
+                        const arr = [...(watchValues.rooms ?? [])];
+                        arr[i] = { ...arr[i], level: e.target.value };
+                        form.setValue("rooms", arr);
+                      }}
+                    />
+                    <Input
+                      placeholder="Room name"
+                      value={room.name}
+                      onChange={(e) => {
+                        const arr = [...(watchValues.rooms ?? [])];
+                        arr[i] = { ...arr[i], name: e.target.value };
+                        form.setValue("rooms", arr);
+                      }}
+                    />
+                    <Input
+                      placeholder="Dimensions (Imperial)"
+                      value={room.dimensionsImperial ?? ""}
+                      onChange={(e) => {
+                        const arr = [...(watchValues.rooms ?? [])];
+                        arr[i] = { ...arr[i], dimensionsImperial: e.target.value };
+                        form.setValue("rooms", arr);
+                      }}
+                    />
+                    <Input
+                      placeholder="Dimensions (Metric)"
+                      value={room.dimensionsMetric ?? ""}
+                      onChange={(e) => {
+                        const arr = [...(watchValues.rooms ?? [])];
+                        arr[i] = { ...arr[i], dimensionsMetric: e.target.value };
+                        form.setValue("rooms", arr);
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="sm:col-span-4"
+                      onClick={() => {
+                        const arr = (watchValues.rooms ?? []).filter((_, j) => j !== i);
+                        form.setValue("rooms", arr);
+                      }}
+                    >
+                      Remove room
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    form.setValue("rooms", [
+                      ...(watchValues.rooms ?? []),
+                      { level: "", name: "" },
+                    ])
+                  }
+                >
+                  Add room
+                </Button>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="openhouses">
-              <AccordionTrigger>6. Open Houses</AccordionTrigger>
+              <AccordionTrigger>8. Open Houses</AccordionTrigger>
               <AccordionContent className="space-y-4 pt-2">
                 <p className="text-sm text-muted-foreground">
                   Add open house dates. Format: YYYY-MM-DD for start/end.

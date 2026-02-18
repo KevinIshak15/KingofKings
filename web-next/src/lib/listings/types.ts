@@ -24,6 +24,37 @@ export interface ListingParking {
   garage?: boolean | null;
 }
 
+export interface ListingBaths {
+  total: number;
+  partial?: number;
+}
+
+export interface ListingSquareFeet {
+  min?: number;
+  max?: number;
+  display?: string;
+}
+
+export interface ListingRoom {
+  level: string;
+  name: string;
+  dimensionsImperial?: string;
+  dimensionsMetric?: string;
+}
+
+export interface ListingMediaPhoto {
+  url: string;
+  alt: string;
+  sortOrder: number;
+}
+
+export interface ListingMedia {
+  photos?: ListingMediaPhoto[];
+  floorplans?: ListingMediaPhoto[];
+  virtualTourUrl?: string | null;
+  videoUrl?: string | null;
+}
+
 export interface ListingImage {
   url: string;
   alt: string;
@@ -71,6 +102,43 @@ export interface Listing {
   createdAt: string;
   updatedAt: string;
   publishedAt?: string | null;
+
+  // Extended fields (optional)
+  listingDescription?: string | null;
+  locationDescription?: string | null;
+  timeOnSite?: string | null;
+  communityName?: string | null;
+  areaName?: string | null;
+  bathsObj?: ListingBaths | null;
+  squareFeet?: ListingSquareFeet | null;
+  squareFootageDisplay?: string | null;
+  buildingType?: string | null;
+  storeys?: number | string | null;
+  titleType?: string | null;
+  landSize?: string | null;
+  ageOfBuilding?: string | null;
+  annualPropertyTaxes?: number | string | null;
+  parkingType?: string | null;
+  totalParkingSpaces?: number | null;
+  bedroomsAboveGrade?: number | null;
+  bathroomsTotal?: number | null;
+  bathroomsPartial?: number | null;
+  flooring?: string[] | string | null;
+  basementType?: string | null;
+  features?: string[] | string | null;
+  foundationType?: string | null;
+  style?: string | null;
+  rentalEquipment?: string[] | string | null;
+  heatingType?: string | null;
+  utilityType?: string[] | string | null;
+  utilitySewer?: string | null;
+  water?: string | null;
+  exteriorFinish?: string[] | string | null;
+  rooms?: ListingRoom[];
+  unitsPreferenceDefault?: "imperial" | "metric" | null;
+  lotFrontage?: string | null;
+  lotDepth?: string | null;
+  media?: ListingMedia | null;
 }
 
 export interface ListingCreateInput

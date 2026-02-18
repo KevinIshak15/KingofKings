@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: { default: "King Of Kings Real Estate Services | Property Management GTA", template: "%s | King Of Kings" },
   description: "Professional property management and luxury real estate services in the Greater Toronto Area. Trusted by landlords and investors.",
   openGraph: { type: "website" },
+  icons: { icon: "/logo.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
