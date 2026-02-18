@@ -1,15 +1,15 @@
 import { getFirestore } from "firebase-admin/firestore";
 import { getAdminApp } from "@/lib/firebase-admin";
-import type { Listing } from "./types";
+import type { Listing, ListingStatus, ListingType, PropertyCategory } from "./types";
 
 function mapDocToListing(doc: { id: string; data: () => Record<string, unknown> }): Listing {
   const d = doc.data();
   const address = d.address ?? { street: "", city: "", province: "", postalCode: "", country: "Canada" };
   return {
     id: doc.id,
-    status: (d.status as string) ?? "published",
-    listingType: (d.listingType as string) ?? "sale",
-    propertyCategory: (d.propertyCategory as string) ?? "home",
+    status: ((d.status as string) ?? "published") as ListingStatus,
+    listingType: ((d.listingType as string) ?? "sale") as ListingType,
+    propertyCategory: ((d.propertyCategory as string) ?? "home") as PropertyCategory,
     propertyType: (d.propertyType as string) ?? "",
     mlsNumber: (d.mlsNumber as string | null) ?? null,
     title: (d.title as string) ?? "",
