@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Bed, Bath, Square } from "lucide-react";
 import { EditListingLink } from "@/components/admin/EditListingLink";
 import type { Listing } from "@/lib/listings/types";
