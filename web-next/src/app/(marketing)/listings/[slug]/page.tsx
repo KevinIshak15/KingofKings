@@ -35,7 +35,7 @@ function formatArrayOrString(v: string[] | string | null | undefined): string {
   return Array.isArray(v) ? v.join(", ") : String(v);
 }
 
-function formatLocation(listing: { address?: { city?: string }; areaName?: string | null; address?: { province?: string; postalCode?: string } }) {
+function formatLocation(listing: { address?: { city?: string; province?: string; postalCode?: string }; areaName?: string | null }) {
   const city = listing.address?.city ?? "";
   const area = listing.areaName ? ` (${listing.areaName})` : "";
   const prov = listing.address?.province ?? "";
