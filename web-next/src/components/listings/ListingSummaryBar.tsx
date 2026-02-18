@@ -15,8 +15,9 @@ function formatAddressLine1(addr: Listing["address"]) {
   return parts.join(", ");
 }
 
-function formatAddressLine2(addr: Listing["address"]) {
-  const parts = [addr.city, addr.areaName, addr.province, addr.postalCode].filter(Boolean);
+function formatAddressLine2(addr: Listing["address"], areaName?: string | null) {
+  const cityPart = addr.city ? addr.city + (areaName ? ` (${areaName})` : "") : (areaName ?? "");
+  const parts = [cityPart, addr.province, addr.postalCode].filter(Boolean);
   return parts.join(", ");
 }
 
@@ -44,7 +45,7 @@ export function ListingSummaryBar({
           )}
           {(addr.city || addr.province) && (
             <p className="text-muted-foreground text-sm mt-0.5">
-              {formatAddressLine2(addr)}
+              {formatAddressLine2(addr, listing.areaName)}
             </p>
           )}
           {listing.mlsNumber && (
