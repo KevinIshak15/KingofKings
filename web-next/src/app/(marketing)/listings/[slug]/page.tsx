@@ -293,7 +293,7 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
                       </div>
                     </SubSection>
                   )}
-                  {(formatArrayOrString(listing.cooling) || listing.heatingType ?? listing.heating) && (
+                  {(formatArrayOrString(listing.cooling) || (listing.heatingType ?? listing.heating)) && (
                     <SubSection title="Heating & Cooling">
                       <div className="grid grid-cols-2 gap-4">
                         <SpecGridItem label="Cooling" value={formatArrayOrString(listing.cooling)} />
