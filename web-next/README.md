@@ -32,9 +32,12 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 For local development, add `.env.local` with `NEXT_PUBLIC_SITE_URL=http://localhost:3000` so metadata and OG tags use localhost.
 
 - `NEXT_PUBLIC_SITE_URL` — Used for canonical URLs, sitemap, and Open Graph. Production: `https://www.kingofkingsgroup.ca`.
-- `NEXT_PUBLIC_API_URL` — Base URL for the Express API (contact, investors, analysis, subscribers). Use empty string for same-origin.
+- `NEXT_PUBLIC_API_URL` — Base URL for the Express API (investor, rental analysis, newsletter forms). Contact uses Next.js `/api/contact` instead.
+- `RESEND_API_KEY` — [Resend](https://resend.com) API key. Required for the contact form; submissions are emailed to `ADMIN_EMAIL` (default `md.ragy@gmail.com`). Until your domain is verified on Resend, use sender `onboarding@resend.dev` (Resend only allows sending to your signup email with that address).
+- `RESEND_FROM` — Optional. E.g. `King of Kings <contact@kingofkingsgroup.ca>` after you verify the domain in Resend.
+- `CONTACT_TO_EMAIL` — Optional. Override recipient; otherwise `ADMIN_EMAIL` is used.
 - `NEXT_PUBLIC_ADMIN_EMAIL` — Admin allowlist email (e.g. `md.ragy@gmail.com`). Used client-side for admin checks.
-- `ADMIN_EMAIL` — Server-side admin email (same value). Used by `/api/admin/setup`.
+- `ADMIN_EMAIL` — Server-side admin email (same value). Used by `/api/admin/setup` and as the contact-form notify address.
 - `NEXT_PUBLIC_FIREBASE_*` — Firebase client config (API key, auth domain, project ID, etc.).
 - `FIREBASE_ADMIN_PROJECT_ID`, `FIREBASE_ADMIN_CLIENT_EMAIL`, `FIREBASE_ADMIN_PRIVATE_KEY` — Firebase Admin SDK for `/api/admin/setup` and `check-setup`.
 

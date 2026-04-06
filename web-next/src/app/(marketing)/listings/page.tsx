@@ -7,7 +7,7 @@ import { AddListingButton } from "@/components/admin/AddListingButton";
 import { ListingsSection } from "@/components/listings/ListingsSection";
 import { listPublishedListingsServer } from "@/lib/listings/server";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { SITE_EMAIL, SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 import { LISTINGS_HUB_CARDS } from "@/lib/listings-menu";
 
 export const revalidate = 60;
@@ -79,7 +79,7 @@ export default async function ListingsHubPage() {
           <p className="mt-10 text-gray-500 text-sm">
             <a href={SITE_PHONE_TEL} className="text-primary hover:underline">{SITE_PHONE}</a>
             {" · "}
-            <a href="mailto:concierge@kingofkings.com" className="text-primary hover:underline">concierge@kingofkings.com</a>
+            <a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:underline">{SITE_EMAIL}</a>
           </p>
         </div>
       </section>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { SITE_EMAIL, SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Terms of Service | King of Kings Real Estate",
@@ -44,7 +44,7 @@ export default function TermsPage() {
 
             <h2 className="font-serif text-xl text-secondary mt-10 mb-4">Contact</h2>
             <p>For questions about these Terms of Service, contact us at{" "}
-              <a href="mailto:concierge@kingofkings.com" className="text-primary hover:underline">concierge@kingofkings.com</a> or{" "}
+              <a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:underline">{SITE_EMAIL}</a> or{" "}
               <a href={SITE_PHONE_TEL} className="text-primary hover:underline">{SITE_PHONE}</a>.
             </p>
           </div>

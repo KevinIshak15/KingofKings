@@ -24,4 +24,5 @@ export const SITE_PROVINCE = "Ontario";
 export const SITE_POSTAL_CODE = "L5N 6J7";
 export const SITE_ADDRESS_FULL = `${SITE_ADDRESS_LINE}, ${SITE_CITY}, ON ${SITE_POSTAL_CODE}`;
 export const SITE_HOURS = "Open 24 hours";
-export const SITE_EMAIL = "concierge@kingofkings.com";
+/** Public contact email (mailto + schema). No mailbox required on the domain. */
+export const SITE_EMAIL = "md.ragy@gmail.com";

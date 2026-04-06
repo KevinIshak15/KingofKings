@@ -2,18 +2,13 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import {
-  API_BASE,
-  type InsertContact,
-  type InsertAnalysis,
-  type InsertSubscriber,
-} from "@/lib/api-types";
+import { API_BASE, type InsertContact, type InsertAnalysis, type InsertSubscriber } from "@/lib/api-types";
 
 export function useContactForm() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (data: InsertContact) => {
-      const res = await fetch(`${API_BASE}/api/contact`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

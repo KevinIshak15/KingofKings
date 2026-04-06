@@ -1,4 +1,4 @@
-import { getSiteUrl } from "@/lib/site";
+import { getSiteUrl, SITE_EMAIL } from "@/lib/site";
 
 const SITE_URL = getSiteUrl();
 
@@ -14,7 +14,7 @@ export function buildLocalBusinessSchema(cityName?: string) {
     description: "Professional property management and real estate services in the Greater Toronto Area.",
     url: SITE_URL,
     telephone: "+1-647-408-5334",
-    email: "concierge@kingofkings.com",
+    email: SITE_EMAIL,
     address: {
       "@type": "PostalAddress",
       streetAddress: "7145 West Credit Ave, Building 1, Suite 100",

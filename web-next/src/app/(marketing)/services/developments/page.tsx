@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/lib/seo/schema";
 import { buildLocalBusinessSchema, buildServiceSchemaFor } from "@/lib/seo/schema";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { SITE_EMAIL, SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Developments | Current Projects & Partnership Inquiries | King of Kings Group",
@@ -121,7 +121,7 @@ export default function DevelopmentsServicesPage() {
           <p className="mt-10 text-gray-500 text-sm">
             <a href={SITE_PHONE_TEL} className="text-primary hover:underline">{SITE_PHONE}</a>
             {" · "}
-            <a href="mailto:concierge@kingofkings.com" className="text-primary hover:underline">concierge@kingofkings.com</a>
+            <a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:underline">{SITE_EMAIL}</a>
           </p>
         </div>
       </section>

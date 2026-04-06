@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { SITE_EMAIL, SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 import { JsonLd } from "@/lib/seo/schema";
 import { buildLocalBusinessSchema, buildServiceSchemaFor } from "@/lib/seo/schema";
 
@@ -194,7 +194,7 @@ export default function PropertyManagementServicesPage() {
           <p className="mt-10 text-gray-500 text-sm">
             <a href={SITE_PHONE_TEL} className="text-primary hover:underline">{SITE_PHONE}</a>
             {" · "}
-            <a href="mailto:concierge@kingofkings.com" className="text-primary hover:underline">concierge@kingofkings.com</a>
+            <a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:underline">{SITE_EMAIL}</a>
           </p>
           <p className="mt-6 text-gray-500 text-sm">
             Learn more: <Link href="/management/mississauga" className="text-primary hover:underline">Property Management Mississauga</Link>

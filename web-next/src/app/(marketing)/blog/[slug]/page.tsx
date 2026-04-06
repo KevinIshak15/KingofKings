@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { BlogContent } from "@/components/BlogContent";
 import { getPostBySlug, getAllSlugs, getCategorySlug } from "@/lib/blog";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { SITE_EMAIL, SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 import { JsonLd } from "@/lib/seo/schema";
 import { buildBlogPostingSchema, buildBreadcrumbSchema } from "@/lib/seo/schema";
 
@@ -157,7 +157,7 @@ export default async function BlogPostPage({
           <p className="mt-10 text-gray-500 text-sm">
             <a href={SITE_PHONE_TEL} className="text-primary hover:underline">{SITE_PHONE}</a>
             {" · "}
-            <a href="mailto:concierge@kingofkings.com" className="text-primary hover:underline">concierge@kingofkings.com</a>
+            <a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:underline">{SITE_EMAIL}</a>
           </p>
           <p className="mt-6 text-gray-500 text-sm">
             <Link href="/blog" className="text-primary hover:underline">← Back to Blog</Link>
