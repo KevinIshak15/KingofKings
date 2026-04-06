@@ -91,9 +91,9 @@ export default function HomePage() {
 
       <section className="section-padding bg-white">
         <div className="container-wide">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4">Our Expertise</h2>
-            <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-6">Comprehensive Wealth Solutions</h3>
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 lg:mb-16">
+            <h2 className="text-primary font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 sm:mb-4">Our Expertise</h2>
+            <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-secondary mb-4 sm:mb-6 leading-tight">Comprehensive Wealth Solutions</h3>
             <p className="text-gray-500 leading-relaxed">
               We provide a holistic approach to real estate, combining market expertise with strategic investment planning to build and preserve your legacy.
             </p>
@@ -103,7 +103,7 @@ export default function HomePage() {
               const Icon = serviceIcons[service.id];
               const isPropertyMgmt = service.id === "property-management";
               return (
-                <div key={service.id} className="bg-muted p-10 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col min-w-0">
+                <div key={service.id} className="bg-muted p-6 sm:p-8 lg:p-10 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col min-w-0">
                   <Icon className="w-12 h-12 text-primary mb-6 shrink-0" />
                   <h4 className="font-serif text-2xl text-secondary mb-4">{service.label}</h4>
                   <p className="text-gray-500 mb-6 leading-relaxed break-words min-w-0 flex-grow">{service.description}</p>
@@ -140,15 +140,23 @@ export default function HomePage() {
 
       <section className="section-padding bg-muted">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 relative">
-              <Image src="/ragymoussa.jpg" alt="Ragy Moussa, Partner at King of Kings Group" width={600} height={600} className="w-full h-[500px] object-cover" />
+          <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4 lg:hidden">About Us</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
+            <div className="relative">
+              <Image
+                src="/ragymoussa.jpg"
+                alt="Ragy Moussa, Partner at King of Kings Group"
+                width={600}
+                height={600}
+                className="w-full h-[min(78vw,22rem)] xs:h-[min(82vw,26rem)] sm:h-[min(85vw,28rem)] md:h-[28rem] lg:h-[500px] object-cover object-top lg:object-center"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               <div className="absolute -bottom-6 -right-6 bg-primary p-8 hidden md:block">
                 <p className="text-secondary font-bold text-xl uppercase tracking-widest leading-tight">Expertise <br /> Driven</p>
               </div>
             </div>
-            <div className="order-1 lg:order-2 space-y-6">
-              <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4">About Us</h2>
+            <div className="space-y-6">
+              <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4 hidden lg:block">About Us</h2>
               <h3 className="font-serif text-3xl md:text-4xl text-secondary mb-6">Built to Protect and Grow Real Estate Assets</h3>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>King of Kings Group is a Greater Toronto Area company built to protect and enhance the long-term value of residential real estate assets. We serve landlords and investors who want professional oversight, disciplined operations, and performance-driven management.</p>
@@ -171,10 +179,10 @@ export default function HomePage() {
       <section className="section-padding bg-white">
         <div className="container-wide">
           <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4 text-center">Trust</h2>
-          <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-16 text-center">Why Owners Choose King of Kings Group</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-secondary mb-10 sm:mb-14 lg:mb-16 text-center leading-tight px-1">Why Owners Choose King of Kings Group</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {WHY_CHOOSE.map((item, i) => (
-              <div key={i} className="bg-muted p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
+              <div key={i} className="bg-muted p-6 sm:p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
                 <h4 className="font-serif text-xl text-secondary mb-3">{item.title}</h4>
                 <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
               </div>
@@ -186,10 +194,10 @@ export default function HomePage() {
       <section className="section-padding bg-muted">
         <div className="container-wide">
           <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4 text-center">Process</h2>
-          <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-16 text-center">How We Work</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-secondary mb-10 sm:mb-14 lg:mb-16 text-center leading-tight px-1">How We Work</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {HOW_WE_WORK.map((item) => (
-              <div key={item.step} className="bg-white p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
+              <div key={item.step} className="bg-white p-6 sm:p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
                 <span className="text-primary font-serif text-4xl font-bold mb-4">{item.step}</span>
                 <h4 className="font-serif text-xl text-secondary mb-3">{item.title}</h4>
                 <p className="text-gray-600 leading-relaxed text-sm">{item.desc}</p>
@@ -215,12 +223,12 @@ export default function HomePage() {
       <section className="section-padding bg-white">
         <div className="container-wide">
           <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4 text-center">Insights</h2>
-          <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-16 text-center">Market Insights & Investor Education</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-secondary mb-10 sm:mb-14 lg:mb-16 text-center leading-tight px-1">Market Insights & Investor Education</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {latestPosts.length > 0
               ? latestPosts.map((post) => (
                   <Link key={post.slug} href={`/blog/${post.slug}`}>
-                    <div className="bg-muted p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
+                    <div className="bg-muted p-6 sm:p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
                       <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">{post.category}</span>
                       <h4 className="font-serif text-xl text-secondary mb-4 line-clamp-2">{post.title}</h4>
                       <p className="text-gray-600 leading-relaxed text-sm mb-4 flex-grow line-clamp-3">{post.excerpt}</p>
@@ -232,7 +240,7 @@ export default function HomePage() {
                 ))
               : Array.from({ length: 3 }).map((_, i) => (
                   <Link key={i} href="/blog">
-                    <div className="bg-muted p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
+                    <div className="bg-muted p-6 sm:p-8 border border-transparent hover:border-primary/20 transition-all duration-300 h-full flex flex-col">
                       <span className="text-primary font-bold tracking-widest uppercase text-xs mb-3 block">Insights</span>
                       <h4 className="font-serif text-xl text-secondary mb-4">Market Insights</h4>
                       <p className="text-gray-600 leading-relaxed text-sm">Explore our blog for market updates and investor education.</p>
@@ -248,18 +256,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-24 bg-secondary text-white text-center">
+      <section className="py-16 sm:py-20 lg:py-24 bg-secondary text-white text-center">
         <div className="container-wide">
-          <h2 className="font-serif text-3xl md:text-4xl mb-4">Let&apos;s Build a Clear Plan for Your Next Move</h2>
-          <p className="text-gray-400 mb-10 max-w-2xl mx-auto">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl mb-4 px-2 leading-tight">Let&apos;s Build a Clear Plan for Your Next Move</h2>
+          <p className="text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto text-sm sm:text-base px-2">
             Whether you&apos;re buying, selling, managing, or investing—we provide strategic guidance tailored to your goals in Mississauga and the GTA.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
-              <button className="bg-primary text-white hover:bg-white hover:text-secondary transition-all duration-300 px-10 py-4 font-bold uppercase tracking-widest text-sm border border-primary">Book a Consultation</button>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-md sm:max-w-none mx-auto px-2">
+            <Link href="/contact" className="w-full sm:w-auto">
+              <button type="button" className="w-full sm:w-auto bg-primary text-white hover:bg-white hover:text-secondary transition-all duration-300 px-6 sm:px-10 py-3.5 sm:py-4 font-bold uppercase tracking-wider sm:tracking-widest text-xs sm:text-sm border border-primary">Book a Consultation</button>
             </Link>
-            <a href={SITE_PHONE_TEL}>
-              <button className="bg-white text-secondary hover:bg-primary hover:text-white transition-all duration-300 px-10 py-4 font-bold uppercase tracking-widest text-sm">{SITE_PHONE}</button>
+            <a href={SITE_PHONE_TEL} className="w-full sm:w-auto">
+              <button type="button" className="w-full sm:w-auto bg-white text-secondary hover:bg-primary hover:text-white transition-all duration-300 px-6 sm:px-10 py-3.5 sm:py-4 font-bold uppercase tracking-wider sm:tracking-widest text-xs sm:text-sm">{SITE_PHONE}</button>
             </a>
           </div>
           <p className="mt-10 text-gray-500 text-sm">

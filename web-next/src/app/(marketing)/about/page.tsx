@@ -27,21 +27,28 @@ export default function AboutPage() {
 
       <section className="section-padding bg-white">
         <div className="container-wide">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-6">Our Leadership</h2>
-            <h3 className="font-serif text-4xl md:text-5xl text-secondary mb-8 leading-tight">The Vision Behind King of Kings Group</h3>
-            <p className="text-gray-600 leading-relaxed text-lg md:text-xl">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20 px-0">
+            <h2 className="text-primary font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 sm:mb-6">Our Leadership</h2>
+            <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl text-secondary mb-6 sm:mb-8 leading-tight">The Vision Behind King of Kings Group</h3>
+            <p className="text-gray-600 leading-relaxed text-base sm:text-lg md:text-xl">
               Over a decade of experience in real estate, property management, and investment strategy across the Greater Toronto Area.
             </p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 relative">
-              <Image src="/ragymoussa.jpg" alt="Ragy Moussa, CEO and Founder of Moussa Homes" width={600} height={600} className="w-full h-[600px] object-cover object-top" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
+            <div className="order-1 relative">
+              <Image
+                src="/ragymoussa.jpg"
+                alt="Ragy Moussa, CEO and Founder of Moussa Homes"
+                width={600}
+                height={600}
+                className="w-full h-[min(70vw,22rem)] xs:h-[min(75vw,26rem)] sm:h-[min(80vw,28rem)] md:h-[32rem] lg:h-[600px] object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
               <div className="absolute -bottom-6 -right-6 bg-primary p-8 hidden md:block">
                 <p className="text-secondary font-bold text-xl uppercase tracking-widest leading-tight">Expertise <br /> Driven</p>
               </div>
             </div>
-            <div className="order-1 lg:order-2 space-y-8">
+            <div className="order-2 space-y-8">
               <div>
                 <h2 className="text-primary font-bold tracking-widest uppercase text-sm mb-4">Leadership</h2>
                 <h3 className="font-serif text-3xl md:text-4xl text-secondary mb-4">Meet Ragy Moussa</h3>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { getSiteUrl } from "@/lib/site";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kingofkings.com";
+const SITE_URL = getSiteUrl();
 const SITE_NAME = "King Of Kings Real Estate Services";
 
 export interface PageMetadataOptions {

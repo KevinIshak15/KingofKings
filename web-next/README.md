@@ -20,14 +20,18 @@ Copy your logo to `web-next/public/logo.png`. If you have it in the original pro
 
 ### Environment Variables
 
-Create `.env.local`:
+Create `.env` (and optionally `.env.local` for machine-specific overrides).
+
+Production canonical URL (`.com` should redirect to this):
 
 ```
-NEXT_PUBLIC_SITE_URL=https://kingofkings.com
+NEXT_PUBLIC_SITE_URL=https://www.kingofkingsgroup.ca
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-- `NEXT_PUBLIC_SITE_URL` — Used for canonical URLs, sitemap, and Open Graph. Set to your production domain.
+For local development, add `.env.local` with `NEXT_PUBLIC_SITE_URL=http://localhost:3000` so metadata and OG tags use localhost.
+
+- `NEXT_PUBLIC_SITE_URL` — Used for canonical URLs, sitemap, and Open Graph. Production: `https://www.kingofkingsgroup.ca`.
 - `NEXT_PUBLIC_API_URL` — Base URL for the Express API (contact, investors, analysis, subscribers). Use empty string for same-origin.
 - `NEXT_PUBLIC_ADMIN_EMAIL` — Admin allowlist email (e.g. `md.ragy@gmail.com`). Used client-side for admin checks.
 - `ADMIN_EMAIL` — Server-side admin email (same value). Used by `/api/admin/setup`.

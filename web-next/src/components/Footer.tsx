@@ -15,9 +15,9 @@ export function Footer() {
     router.push("/");
   }
   return (
-    <footer className="bg-secondary text-white pt-24 pb-12">
+    <footer className="bg-secondary text-white pt-16 sm:pt-20 lg:pt-24 pb-[max(3rem,env(safe-area-inset-bottom,0px)+1.5rem)]">
       <div className="container-wide">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 lg:gap-24 mb-12 sm:mb-16">
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3 group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -43,15 +43,15 @@ export function Footer() {
               <li><Link href="/property-management" className="hover:text-primary transition-colors">Property Management</Link></li>
               <li><Link href="/services/investments" className="hover:text-primary transition-colors">Investments</Link></li>
               <li><Link href="/services/developments" className="hover:text-primary transition-colors">Developments</Link></li>
-              <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
+              <li><Link href="/blog" className="hover:text-primary transition-colors">Insights</Link></li>
               <li><Link href="/about" className="hover:text-primary transition-colors">About</Link></li>
               <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-serif text-lg mb-6">Contact</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li>{SITE_ADDRESS_FULL}</li>
+            <ul className="space-y-4 text-sm text-gray-400 break-words">
+              <li className="max-w-full">{SITE_ADDRESS_FULL}</li>
               <li><a href={SITE_PHONE_TEL} className="hover:text-primary transition-colors">{SITE_PHONE}</a></li>
               <li><a href={`mailto:${SITE_EMAIL}`} className="text-primary hover:text-primary/80 transition-colors">{SITE_EMAIL}</a></li>
             </ul>

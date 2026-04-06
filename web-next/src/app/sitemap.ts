@@ -1,10 +1,11 @@
 import { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/site";
 import { cities } from "@/lib/cities";
 import { propertyManagementCities } from "@/lib/property-management-cities";
 import { getAllPosts, BLOG_CATEGORIES, getCategorySlug } from "@/lib/blog";
 import { listPublishedListingsServer } from "@/lib/listings/server";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kingofkings.com";
+const SITE_URL = getSiteUrl();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();

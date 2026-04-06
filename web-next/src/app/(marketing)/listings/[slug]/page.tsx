@@ -7,10 +7,10 @@ import { ListingGallery } from "@/components/listings/ListingGallery";
 import { RoomsTable } from "@/components/listings/RoomsTable";
 import { EditListingLink } from "@/components/admin/EditListingLink";
 import { getPublishedListingBySlug } from "@/lib/listings/server";
-import { SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
+import { getSiteUrl, SITE_PHONE, SITE_PHONE_TEL } from "@/lib/site";
 import { Bed, Bath, Square } from "lucide-react";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kingofkings.com";
+const SITE_URL = getSiteUrl();
 
 interface ListingPageProps {
   params: Promise<{ slug: string }>;

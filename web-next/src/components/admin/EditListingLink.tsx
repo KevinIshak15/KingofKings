@@ -24,7 +24,7 @@ export function EditListingLink({
       {variant === "button" ? (
         <Link
           href={href}
-          className="inline-flex items-center gap-2 border border-white text-white hover:bg-white hover:text-secondary transition-all duration-300 px-6 py-3 font-bold uppercase tracking-widest text-sm rounded-md"
+          className="inline-flex w-full sm:w-auto shrink-0 items-center justify-center gap-2 border border-white text-white hover:bg-white hover:text-secondary transition-all duration-300 px-5 py-3 sm:px-6 font-bold uppercase tracking-wider sm:tracking-widest text-xs sm:text-sm rounded-md"
         >
           {content}
         </Link>

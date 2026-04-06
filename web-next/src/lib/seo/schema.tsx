@@ -1,4 +1,6 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kingofkings.com";
+import { getSiteUrl } from "@/lib/site";
+
+const SITE_URL = getSiteUrl();
 
 export function buildLocalBusinessSchema(cityName?: string) {
   const name = cityName
@@ -57,8 +59,6 @@ export function buildServiceSchemaFor(options: {
   };
 }
 
-const SITE_URL_FALLBACK = process.env.NEXT_PUBLIC_SITE_URL || "https://kingofkings.com";
-
 export function buildBlogPostingSchema(options: {
   title: string;
   description: string;
@@ -68,7 +68,7 @@ export function buildBlogPostingSchema(options: {
   author?: string;
   image?: string;
 }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL_FALLBACK;
+  const siteUrl = getSiteUrl();
   const url = `${siteUrl}/blog/${options.slug}`;
   return {
     "@context": "https://schema.org",
@@ -92,7 +92,7 @@ export function buildBlogPostingSchema(options: {
 }
 
 export function buildBreadcrumbSchema(items: { name: string; url: string }[]) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL_FALLBACK;
+  const siteUrl = getSiteUrl();
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
